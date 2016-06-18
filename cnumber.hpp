@@ -18,8 +18,12 @@ class cnumber {
 			signi = get_sign(i);
 			
 		}
-		cnumber operator+(const cnumber& that) {
+		cnumber operator+(const cnumber &that) {
 			cnumber z(that.r + this->r, that.i + this->i);
+			return z;
+		}
+		cnumber operator*(const cnumber &that) {
+			cnumber z( (that.r * this->r ) - (that.i * this->i) , (that.r * this->i) + (this->r * that.i) );
 			return z;
 		}
 
