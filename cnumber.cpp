@@ -3,7 +3,8 @@
 
 
 int main() {
-	cnumber z(1, -7);
+	cnumber a(-1, 4);
+	cnumber b(4, -7);
 
-	cout << z << endl;
+	cout << "a = " << a << " b = " <<  b << " a + b =  " << a + b << endl;
 }

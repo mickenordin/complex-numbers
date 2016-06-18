@@ -18,9 +18,13 @@ class cnumber {
 			signi = get_sign(i);
 			
 		}
+		cnumber operator+(const cnumber& that) {
+			cnumber z(that.r + this->r, that.i + this->i);
+			return z;
+		}
 
 		friend ostream &operator<<( ostream &os, const cnumber &z ) { 
-			os << z.r << (z.signi ? '+' : '-') << 'i' << (z.signi ? z.i : z.i * -1); 
+			os << z.r << (z.signi ? '+' : '\0' ) <<  z.i << 'i'; 
 			return os;            
 		}
 
