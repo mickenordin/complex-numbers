@@ -28,7 +28,11 @@ class cnumber {
 
 		// Operators
 		cnumber operator+(const cnumber &that) {
-			cnumber z(that.r + this->r, that.i + this->i);
+			cnumber z(this->r + that.r, this->i + that.i);
+			return z;
+		}
+		cnumber operator-(const cnumber &that) {
+			cnumber z(this->r - that.r, this->i - that.i);
 			return z;
 		}
 		cnumber operator*(const cnumber &that) {
