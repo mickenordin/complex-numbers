@@ -1,59 +1,76 @@
 #include <iostream>
+#include "../fractions/fractions.hpp"
 
 using namespace std;
 
 class cnumber {
 	private:
-		float r, i;
+		fraction r, i;
 		bool signr, signi;
-		bool get_sign(int i) {
-			return (i >= 0);
+		bool get_sign(const fraction &q) {
+			return q.sign();
 		}
 
 	public:
 		// Constructor
-		cnumber(int a, int b) {
+		cnumber(const fraction &a, const fraction &b) {
 			r = a;
 			i = b;
 			signr = get_sign(r);
 			signi = get_sign(i);
-			
 		}
-		cnumber(float a, float b) {
-			r = a;
-			i = b;
+		cnumber(int a, int b) {
+			fraction qa(a);
+			fraction qb(b);
+			r = qa;
+			i = qb;
 			signr = get_sign(r);
 			signi = get_sign(i);
-			
+		}
+		cnumber(double a, double b) {
+			fraction qa(a);
+			fraction qb(b);
+			r = qa;
+			i = qb;
+			signr = get_sign(r);
+			signi = get_sign(i);
 		}
 		cnumber(const cnumber &z) {
 			r = z.r;
 			i = z.i;
 			signr = z.signr;
 			signi = z.signi;
-			
 		}
 		// Member functions
 		cnumber conjugate() const {
-			cnumber z(this->r, this->i * -1);
+			cnumber z(fraction(this->r.get_n(),this->r.get_d()),fraction(this->i.get_n() * -1, this->i.get_d()));
 			return z;
 		}
 
-
 		// Operators
-		cnumber operator+(const cnumber &that) {
+		cnumber operator+(const cnumber &that) const {
 			cnumber z(this->r + that.r, this->i + that.i);
 			return z;
 		}
-		cnumber operator-(const cnumber &that) {
+		cnumber operator-(const cnumber &that) const {
 			cnumber z(this->r - that.r, this->i - that.i);
 			return z;
 		}
-		cnumber operator*(const cnumber &that) {
+		cnumber operator*(const int i) const {
+			cnumber that(i,0);
+			cnumber z( *this * that);
+			return z;
+		}
+		cnumber operator*(const fraction &dec) const {
+			cnumber that(dec,0);
+			cnumber z( *this * that);
+			return z;
+		}
+		cnumber operator*(const cnumber &that) const {
 			cnumber z( (this->r * that.r ) - (this->i * that.i) , (this->r * that.i) + (that.r * this->i) );
 			return z;
 		}
-		cnumber operator/(const cnumber &that) {
+		cnumber operator/(const cnumber &that) const {
 			cnumber numerator( (this->r * that.r ) - (this->i * ( that.i * -1)) , (this->r * (that.i * -1)) + (that.r * this->i) );
 			cnumber denominator( (that.r * that.r ) - (that.i * ( that.i * -1)) , (that.r * (that.i * -1)) + (that.r * that.i) );
 			cnumber ratio(numerator.r / denominator.r, numerator.i / denominator.r);
@@ -86,6 +103,5 @@ class cnumber {
 			signr = z.signr;
 			signi = z.signi;
 		}
-
 }; 
 
