@@ -37,7 +37,23 @@ class cnumber {
 		}
 
 		friend ostream &operator<<( ostream &os, const cnumber &z ) { 
-			os << z.r << (z.signi ? '+' : '\0' ) <<  z.i << 'i'; 
+			if (z.r != 0) {
+				os << z.r; 
+				if (z.signi && (z.i != 0)) {
+					os << '+';
+				}
+			}
+			if (z.i != 0) {
+				if ((z.i != 1) && (z.i != -1)) {
+					os << z.i;
+				}	
+				else {
+					if (! z.signi) {
+						os << '-';
+					}
+				}
+				os << 'i';
+			}
 			return os;            
 		}
 		void operator=(const cnumber &z ) { 
