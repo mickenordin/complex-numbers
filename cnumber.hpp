@@ -5,45 +5,27 @@ using namespace std;
 
 class cnumber {
 	private:
-		fraction r, i;
-		bool signr, signi;
-		bool get_sign(const fraction &q) {
-			return q.sign();
-		}
+		fraction r,i;
 
 	public:
 		// Constructor
 		cnumber(const fraction &a, const fraction &b) {
 			r = a;
 			i = b;
-			signr = get_sign(r);
-			signi = get_sign(i);
 		}
 		cnumber(int a, int b) {
-			fraction qa(a);
-			fraction qb(b);
-			r = qa;
-			i = qb;
-			signr = get_sign(r);
-			signi = get_sign(i);
+			r = a;
+			i = b;
 		}
 		cnumber(double a, double b) {
-			fraction qa(a);
-			fraction qb(b);
-			r = qa;
-			i = qb;
-			signr = get_sign(r);
-			signi = get_sign(i);
-		}
-		cnumber(const cnumber &z) {
-			r = z.r;
-			i = z.i;
-			signr = z.signr;
-			signi = z.signi;
+			r = a;
+			i = b;
 		}
 		// Member functions
 		cnumber conjugate() const {
-			cnumber z(fraction(this->r.get_n(),this->r.get_d()),fraction(this->i.get_n() * -1, this->i.get_d()));
+			fraction a(this->r.get_n(), this->r.get_d());
+			fraction b(this->i.get_n(), this->i.get_d());
+			cnumber z(a,b * -1);
 			return z;
 		}
 
@@ -56,19 +38,13 @@ class cnumber {
 			cnumber z(this->r - that.r, this->i - that.i);
 			return z;
 		}
-		cnumber operator*(const int i) const {
-			cnumber that(i,0);
-			cnumber z( *this * that);
-			return z;
-		}
-		cnumber operator*(const fraction &dec) const {
-			cnumber that(dec,0);
-			cnumber z( *this * that);
-			return z;
-		}
 		cnumber operator*(const cnumber &that) const {
-			cnumber z( (this->r * that.r ) - (this->i * that.i) , (this->r * that.i) + (that.r * this->i) );
+			cnumber z( (that.r * this->r ) - (that.i * this->i) , (that.r * this->i) + (this->r * that.i) );
 			return z;
+		}
+		cnumber operator*(const fraction &q) const {
+			cnumber that(q,fraction(0));
+			return *this * that;
 		}
 		cnumber operator/(const cnumber &that) const {
 			cnumber numerator( (this->r * that.r ) - (this->i * ( that.i * -1)) , (this->r * (that.i * -1)) + (that.r * this->i) );
@@ -80,19 +56,16 @@ class cnumber {
 		friend ostream &operator<<( ostream &os, const cnumber &z ) { 
 			if (z.r != 0) {
 				os << z.r; 
-				if (z.signi && (z.i > 0)) {
+				if ((z.i.get_sign() == 1) && (z.i > 0)) {
 					os << '+';
 				}
 			}
 			if (z.i != 0) {
 				if ((z.i != 1) && (z.i != -1)) {
 					os << z.i;
+				} else if (z.i == -1) {
+					os << '-';
 				}	
-				else {
-					if (! z.signi) {
-						os << '-';
-					}
-				}
 				os << 'i';
 			}
 			return os;            
@@ -100,8 +73,6 @@ class cnumber {
 		void operator=(const cnumber &z ) { 
 			r = z.r;
 			i = z.i;
-			signr = z.signr;
-			signi = z.signi;
 		}
 }; 
 

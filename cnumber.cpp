@@ -12,12 +12,12 @@ int main() {
 	cout << "b = " <<  b << endl;
 	cout << "b* = " << b.conjugate() << endl;
 	cout << "b*b* = " << b * b.conjugate() << endl;
-	cout << "a + b =  " << a + b << endl;
-	cout << "(a + b)* =  " << (a + b).conjugate() << endl;
+	cout << "a + b = " << a + b << endl;
+	cout << "(a + b)* = " << (a + b).conjugate() << endl;
 	cout << "a - b =  " << a - b << endl;
-	cout << "(a - b)* =  " << (a - b).conjugate() << endl;
+	cout << "(a - b)* = " << (a - b).conjugate() << endl;
 	cout << "a * b =  " << a * b << endl;
-	cout << "(a * b)* =  " << (a * b).conjugate() << endl;
-	cout << "a / b =  " << a / b << endl;
-	cout << "(a / b)* =  " << (a / b).conjugate() << endl;
+	cout << "(a * b)* = " << (a * b).conjugate() << endl;
+	cout << "a / b = " << a / b << endl;
+	cout << "(a / b)* = " << (a / b).conjugate() << endl;
 }
